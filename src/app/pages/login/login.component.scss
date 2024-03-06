@@ -1,0 +1,32 @@
+@import "variables";
+
+:host {
+  /* o host cria "div" container */
+  background-color: #222;
+  position: absolute;
+  width: 100vw; /* vw pega todo a largura da tela */
+  height: 100vh; /* vh pega toda a altura da tela */
+  flex-direction: column;
+
+  .base {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+
+    img {
+      width: 40%;
+    }
+
+    button {
+      font-size: 1.5rem;
+      min-width: 200px;
+      padding: 20px;
+      border-radius: 500px;
+      background-color: $primary-color;
+      color: white;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+}
