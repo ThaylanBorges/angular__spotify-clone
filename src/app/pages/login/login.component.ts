@@ -9,7 +9,18 @@ import { SpotifyService } from './../../services/spotify.service';
 export class LoginComponent {
   constructor(private spotifyService: SpotifyService) {}
 
+  ngOnInit() {
+    this.getTokenUrl();
+  }
+
   getLogin() {
     window.location.href = this.spotifyService.getUrlLogin();
+  }
+
+  getTokenUrl() {
+    const tokem = this.spotifyService.getTokem();
+    console.log(tokem);
+
+    return tokem;
   }
 }
