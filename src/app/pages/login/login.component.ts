@@ -6,6 +6,7 @@ import { SpotifyService } from './../../services/spotify.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
+
 export class LoginComponent {
   constructor(private spotifyService: SpotifyService) {}
 
@@ -18,9 +19,10 @@ export class LoginComponent {
   }
 
   getTokenUrl() {
-    const tokem = this.spotifyService.getTokem();
-    console.log(tokem);
-
-    return tokem;
+    const token = this.spotifyService.getToken();
+    
+    if (token) {
+      this.spotifyService.setAccessToken(token);
+    }
   }
 }
