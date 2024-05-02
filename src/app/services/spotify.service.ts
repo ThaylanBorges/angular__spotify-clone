@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SpotifyConfig } from 'src/environments/environment';
-import { Iuser } from '../interfaces/iuser';
+import { Iuser } from '../interfaces/Iuser';
 
 import Spotify from 'spotify-web-api-js';
-import { SpotifyOfUser } from '../Common/spotifyHelper';
+import { SpotifyOfPlaylist, SpotifyOfUser } from '../Common/spotifyHelper';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class SpotifyService {
   spotifyApi: Spotify.SpotifyWebApiJs;
   user!: Iuser;
@@ -29,15 +28,11 @@ export class SpotifyService {
     }
 
     try {
-      
       this.setAccessToken(token);
       await this.getSpotifyUser();
-      return !!this.user;
-    
+      return this.user;
     } catch (ex) {
-      
       return false;
-    
     }
   }
 
@@ -68,5 +63,14 @@ export class SpotifyService {
   setAccessToken(token: string) {
     this.spotifyApi.setAccessToken(token);
     localStorage.setItem('token', token);
+  }
+
+  async searchUserPlaylist(offset = 0, limit = 50) {
+    const playlist = await this.spotifyApi.getUserPlaylists(this.user.id, {
+      offset,
+      limit,
+    });
+
+    return playlist.items.map(SpotifyOfPlaylist);
   }
 }

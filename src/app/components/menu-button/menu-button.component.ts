@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-menu-button',
@@ -8,4 +7,12 @@ import { Input } from '@angular/core';
 })
 export class MenuButtonComponent {
   @Input() description = '';
+
+  @Input() selected = false;
+
+  @Output() click = new EventEmitter<void>();
+
+  onClick() {
+    this.click.emit();
+  }
 }
