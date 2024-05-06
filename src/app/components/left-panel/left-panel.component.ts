@@ -7,7 +7,6 @@ import {
   faHome,
   faMusic,
   faSearch,
-  faThermometer4,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
