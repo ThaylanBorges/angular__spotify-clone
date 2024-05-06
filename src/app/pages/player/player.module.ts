@@ -7,9 +7,15 @@ import { LeftPanelComponent } from 'src/app/components/left-panel/left-panel.com
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FooterUserComponent } from 'src/app/components/footer-user/footer-user.component';
 
 @NgModule({
-  declarations: [PlayerComponent, LeftPanelComponent, MenuButtonComponent],
+  declarations: [
+    PlayerComponent,
+    LeftPanelComponent,
+    MenuButtonComponent,
+    FooterUserComponent,
+  ],
   imports: [
     CommonModule,
     FontAwesomeModule,
