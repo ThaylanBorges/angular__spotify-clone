@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+
+  .my-songs {
+    padding: 0px 50px;
+    padding-bottom: 20px;
+    width: 100vh;
+    max-height: 100%;
+    overflow-y: scroll;
+    background-color: rebeccapurple;
+  }
+
+  .right-panel {
+    width: 100%;
+  }
+}

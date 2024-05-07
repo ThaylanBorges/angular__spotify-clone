@@ -5,22 +5,22 @@
   <div class="menu-container flex options">
     <app-menu-button
       [description]="'Home'"
-      (click)="clickButton('Home')"
-      [selected]="selectedMenu === 'Home'"
+      (click)="clickButton('home')"
+      [selected]="selectedMenu === 'home'"
     >
       <fa-icon [icon]="homeIcon"></fa-icon>
     </app-menu-button>
     <app-menu-button
       [description]="'Pesquisar'"
-      (click)="clickButton('Pesquisar')"
-      [selected]="selectedMenu === 'Pesquisar'"
+      (click)="clickButton('research')"
+      [selected]="selectedMenu === 'research'"
     >
       <fa-icon [icon]="searchIcon"></fa-icon>
     </app-menu-button>
     <app-menu-button
       [description]="'Artistas'"
-      (click)="clickButton('Artistas')"
-      [selected]="selectedMenu === 'Artistas'"
+      (click)="clickButton('artist')"
+      [selected]="selectedMenu === 'artist'"
     >
       <fa-icon [icon]="artistIcon"></fa-icon>
     </app-menu-button>

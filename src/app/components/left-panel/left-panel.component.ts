@@ -8,6 +8,7 @@ import {
   faMusic,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-panel',
@@ -15,7 +16,7 @@ import {
   styleUrls: ['./left-panel.component.scss'],
 })
 export class LeftPanelComponent {
-  selectedMenu = 'Home';
+  selectedMenu = 'home';
 
   playlists: Iplaylist[] = [];
 
@@ -25,7 +26,7 @@ export class LeftPanelComponent {
   artistIcon = faGuitar;
   playlistIcon = faMusic;
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private spotifyService: SpotifyService, private router: Router) {}
 
   ngOnInit(): void {
     this.getPlaylist();
@@ -33,6 +34,7 @@ export class LeftPanelComponent {
 
   clickButton(button: string) {
     this.selectedMenu = button;
+    this.router.navigateByUrl('/player/' + this.selectedMenu);
   }
 
   async getPlaylist() {
