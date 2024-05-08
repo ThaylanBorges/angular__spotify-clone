@@ -4,7 +4,13 @@ import { Router } from '@angular/router';
 import { Iuser } from '../interfaces/Iuser';
 
 import Spotify from 'spotify-web-api-js';
-import { SpotifyOfPlaylist, SpotifyOfUser } from '../Common/spotifyHelper';
+import {
+  SpotifyOfArtist,
+  SpotifyOfPlaylist,
+  SpotifyOfUser,
+} from '../Common/spotifyHelper';
+import { Iartist } from '../interfaces/Iartist';
+import { Iplaylist } from '../interfaces/Iplaylist';
 
 @Injectable({
   providedIn: 'root',
@@ -66,13 +72,18 @@ export class SpotifyService {
     localStorage.setItem('token', token);
   }
 
-  async searchUserPlaylist(offset = 0, limit = 50) {
+  async searchUserPlaylist(offset = 0, limit = 50): Promise<Iplaylist[]> {
     const playlist = await this.spotifyApi.getUserPlaylists(this.user.id, {
       offset,
       limit,
     });
 
     return playlist.items.map(SpotifyOfPlaylist);
+  }
+
+  async searchTopArtists(limit = 10): Promise<Iartist[]> {
+    const artists = await this.spotifyApi.getMyTopArtists({ limit });
+    return artists.items.map(SpotifyOfArtist);
   }
 
   logout() {

@@ -7,6 +7,7 @@ import { LeftPanelComponent } from 'src/app/components/left-panel/left-panel.com
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 import { FooterUserComponent } from 'src/app/components/footer-user/footer-user.component';
 import { HomeComponent } from '../home/home.component';
+import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -17,6 +18,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MenuButtonComponent,
     FooterUserComponent,
     HomeComponent,
+    TopArtistComponent,
   ],
   imports: [
     CommonModule,
