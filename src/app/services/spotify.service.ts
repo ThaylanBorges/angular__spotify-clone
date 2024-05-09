@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SpotifyConfig } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Iuser } from '../interfaces/Iuser';
+import { Iartist } from '../interfaces/Iartist';
+import { Iplaylist } from '../interfaces/Iplaylist';
 
 import Spotify from 'spotify-web-api-js';
 import {
@@ -9,8 +11,6 @@ import {
   SpotifyOfPlaylist,
   SpotifyOfUser,
 } from '../Common/spotifyHelper';
-import { Iartist } from '../interfaces/Iartist';
-import { Iplaylist } from '../interfaces/Iplaylist';
 
 @Injectable({
   providedIn: 'root',

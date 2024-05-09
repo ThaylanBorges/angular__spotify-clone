@@ -22,8 +22,9 @@ export class TopArtistComponent {
 
     if (artists) {
       this.topArtist = artists[0];
+    } else {
+      console.log('Artistas não encontrados');
     }
-
     console.log(this.topArtist);
   }
 }
