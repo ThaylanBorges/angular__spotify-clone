@@ -8,6 +8,7 @@ import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.
 import { FooterUserComponent } from 'src/app/components/footer-user/footer-user.component';
 import { HomeComponent } from '../home/home.component';
 import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
+import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -19,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterUserComponent,
     HomeComponent,
     TopArtistComponent,
+    RightPanelComponent,
   ],
   imports: [
     CommonModule,

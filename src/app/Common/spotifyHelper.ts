@@ -1,6 +1,9 @@
 import { Iartist } from '../interfaces/Iartist';
 import { Iplaylist } from '../interfaces/Iplaylist';
 import { Iuser } from '../interfaces/Iuser';
+import { Imusic } from '../interfaces/Imusic';
+import { addMilliseconds, format } from 'date-fns';
+import { formatDate } from '@angular/common';
 
 export function SpotifyOfUser(
   user: SpotifyApi.CurrentUsersProfileResponse
@@ -27,5 +30,27 @@ export function SpotifyOfArtist(artist: SpotifyApi.ArtistObjectFull): Iartist {
     id: artist.id,
     name: artist.name,
     imageUrl: artist.images.sort((a, b) => a.width! - b.width!).pop()!.url,
+  };
+}
+
+export function SpotifyOfMusics(musics: SpotifyApi.TrackObjectFull): Imusic {
+  const msForM = (ms: number) => {
+    const date = addMilliseconds(new Date(0), ms);
+    return format(date, 'mm:ss');
+  };
+
+  return {
+    id: musics.id,
+    title: musics.name,
+    artists: musics.artists.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+    })),
+    album: {
+      id: musics.id,
+      imageUrl: musics.album.images.shift()!.url,
+      name: musics.album.name,
+    },
+    time: msForM(musics.duration_ms),
   };
 }

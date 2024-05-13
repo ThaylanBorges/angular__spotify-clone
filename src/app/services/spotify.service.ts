@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { Iuser } from '../interfaces/Iuser';
 import { Iartist } from '../interfaces/Iartist';
 import { Iplaylist } from '../interfaces/Iplaylist';
+import { Imusic } from '../interfaces/Imusic';
 
 import Spotify from 'spotify-web-api-js';
 import {
   SpotifyOfArtist,
+  SpotifyOfMusics,
   SpotifyOfPlaylist,
   SpotifyOfUser,
 } from '../Common/spotifyHelper';
@@ -84,6 +86,11 @@ export class SpotifyService {
   async searchTopArtists(limit = 10): Promise<Iartist[]> {
     const artists = await this.spotifyApi.getMyTopArtists({ limit });
     return artists.items.map(SpotifyOfArtist);
+  }
+
+  async searchMusic(offset = 0, limit = 50): Promise<Imusic[]> {
+    const musics = await this.spotifyApi.getMySavedTracks({ offset, limit });
+    return musics.items.map((x) => SpotifyOfMusics(x.track));
   }
 
   logout() {

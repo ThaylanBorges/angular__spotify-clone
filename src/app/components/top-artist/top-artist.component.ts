@@ -25,6 +25,5 @@ export class TopArtistComponent {
     } else {
       console.log('Artistas não encontrados');
     }
-    console.log(this.topArtist);
   }
 }
