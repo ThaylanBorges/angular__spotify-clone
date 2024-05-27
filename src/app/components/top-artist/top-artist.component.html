@@ -1,11 +1,42 @@
-<div class="card p-20">
-  <div class="artist flex">
-    <span class="title-bg">
-      {{ topArtist.name }}
-    </span>
+<div class="carousel p-20">
+  <div *ngFor="let artist of topFiveArtists; let i = index">
+    <div
+      class="image-container fade"
+      [ngClass]="{ 'image-active': selectedIndex === i }"
+    >
+      <span class="artist flex">
+        {{ artist.name }}
+      </span>
+      <div
+        class="image"
+        [style.background-image]="'url(' + artist.imageUrl + ')'"
+      ></div>
+    </div>
   </div>
-  <div
-    class="image"
-    [style.background-image]="'url(' + topArtist.imageUrl + ')'"
-  ></div>
+
+  <div class="carosel-dot flex">
+    <span
+      class="dot"
+      *ngFor="let dot of topFiveArtists; let i = index"
+      [ngClass]="{ 'active': selectedIndex === i }"
+      (click)="selectImage(i)"
+    ></span>
+  </div>
+
+  <div class="btn-carousel btn-prev flex">
+    <fa-icon 
+      class="icon-carosel icon-prev" 
+      [icon]="faArrowLeft" 
+      (click)="onPrevClick()">
+    </fa-icon>
+  </div>
+
+  <div class="btn-carousel btn-next flex">
+    <fa-icon 
+      class="icon-carosel icon-prev" 
+      [icon]="faArrowRight"
+      (click)='onNextClick()'
+      >
+    </fa-icon>
+  </div>
 </div>

@@ -1,16 +1,31 @@
 @import "variables";
 
-.card {
-  height: 250px;
+.carousel {
   position: relative;
+  height: 300px;
   overflow: hidden;
+
+  .image-container {
+    display: none;
+  }
+
+  .fade {
+    animation-name: fade;
+    animation-duration: 0.8s;    
+  }
+
+  .image-active {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 
   .image {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100%;
+    width: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -25,13 +40,90 @@
     height: 100%;
     z-index: 1;
     padding: 10px 30px;
+    justify-content: end;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+
+    font-weight: bold;
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px #fff;
   }
 
-  span {
-    color: $transparentBlack-70;
-    text-shadow: 2px 2px 10px $background-color2;
+  .carosel-dot {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    justify-content: center;
+    margin-bottom: 1rem;
+    z-index: 2;
+
+    .dot {
+      cursor: pointer;
+      height: 13px;
+      width: 13px;
+      margin: 0 5px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      transition: opacity 0.6s ease;
+      opacity: 0.5;
+    }
+
+    .active,
+    .dot:hover {
+      opacity: 1;
+    }
+  }
+
+  .btn-carousel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 8%;
+    background: 0 0;
+    border: 0;
+    z-index: 3;
+    color: #fff;
+
+  }
+
+  .btn-prev {
+    left: 0;
+  }
+
+  .btn-next {
+    right: 0;
+  }
+
+  .icon-carosel {
+    opacity: 0.5;
+    transition: all 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
+
+  .icon-prev {
+    font-size: 35px;
+
+  }
+}
+
+@keyframes fade {
+  from { 
+    opacity: 0.4; 
+  }
+  to {
+    opacity: 1;
   }
 }
