@@ -1,8 +1,22 @@
 @import "table";
+@import "variables";
 
 :host {
   display: flex;
   justify-content: space-between;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+
+    &-thumb {
+      background-color: rgb($primary-color, 0.2);
+      border-radius: 10px;
+    }
+
+    &-track {
+      background: transparent;
+    }
+  }
 
   .my-songs {
     padding: 0px 50px;

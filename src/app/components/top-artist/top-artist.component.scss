@@ -11,7 +11,7 @@
 
   .fade {
     animation-name: fade;
-    animation-duration: 0.8s;    
+    animation-duration: 0.8s;
   }
 
   .image-active {
@@ -26,7 +26,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-position: center;
+    background-position: 75% 35%;
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 0;
@@ -48,7 +48,7 @@
     text-shadow: 2px 2px 8px #fff;
   }
 
-  .carosel-dot {
+  .carousel-dot {
     position: absolute;
     right: 0;
     left: 0;
@@ -59,8 +59,8 @@
 
     .dot {
       cursor: pointer;
-      height: 13px;
-      width: 13px;
+      height: 7px;
+      width: 7px;
       margin: 0 5px;
       background-color: #fff;
       border-radius: 50%;
@@ -82,12 +82,9 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 8%;
-    background: 0 0;
-    border: 0;
+    width: 7%;
     z-index: 3;
     color: #fff;
-
   }
 
   .btn-prev {
@@ -99,7 +96,7 @@
   }
 
   .icon-carosel {
-    opacity: 0.5;
+    opacity: 0.4;
     transition: all 0.15s ease;
     cursor: pointer;
 
@@ -115,13 +112,12 @@
 
   .icon-prev {
     font-size: 35px;
-
   }
 }
 
 @keyframes fade {
-  from { 
-    opacity: 0.4; 
+  from {
+    opacity: 0.4;
   }
   to {
     opacity: 1;

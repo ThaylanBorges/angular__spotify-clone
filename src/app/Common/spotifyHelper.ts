@@ -3,7 +3,6 @@ import { Iplaylist } from '../interfaces/Iplaylist';
 import { Iuser } from '../interfaces/Iuser';
 import { Imusic } from '../interfaces/Imusic';
 import { addMilliseconds, format } from 'date-fns';
-import { formatDate } from '@angular/common';
 
 export function SpotifyOfUser(
   user: SpotifyApi.CurrentUsersProfileResponse
@@ -40,7 +39,7 @@ export function SpotifyOfMusics(musics: SpotifyApi.TrackObjectFull): Imusic {
   };
 
   return {
-    id: musics.id,
+    id: musics.uri,
     title: musics.name,
     artists: musics.artists.map((artist) => ({
       id: artist.id,

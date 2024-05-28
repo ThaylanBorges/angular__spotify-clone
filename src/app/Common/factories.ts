@@ -9,6 +9,16 @@ export function newArtist(): Iartist {
   };
 }
 
+export function newArtists(): Iartist[] {
+  return [
+    {
+      id: '',
+      name: '',
+      imageUrl: '',
+    },
+  ];
+}
+
 export function newMusic(): Imusic {
   return {
     id: '',

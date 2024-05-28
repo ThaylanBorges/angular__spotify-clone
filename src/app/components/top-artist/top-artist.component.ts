@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { newArtist } from 'src/app/Common/factories';
+import { newArtists } from 'src/app/Common/factories';
 import { Iartist } from 'src/app/interfaces/Iartist';
-import { Iartists } from 'src/app/interfaces/Iartists';
 import { SpotifyService } from 'src/app/services/spotify.service';
+import {
+  faArrowAltCircleLeft,
+  faArrowAltCircleRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-top-artist',
@@ -11,33 +13,41 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   styleUrls: ['./top-artist.component.scss'],
 })
 export class TopArtistComponent {
-  topArtist: Iartist = newArtist();
-  topFiveArtists: Iartists[] = [];
+  topArtists: Iartist[] = newArtists();
+
+  // elementos do carrossel
   selectedIndex = 0;
-  indicators = true;
-  faArrowLeft = faArrowAltCircleLeft
-  faArrowRight = faArrowAltCircleRight
+  autoSlide = true;
+  slideInterval = 4000;
+
+  // icones de carrossel
+  faArrowLeft = faArrowAltCircleLeft;
+  faArrowRight = faArrowAltCircleRight;
 
   constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit() {
-    this.searchArtist();
-    this.searchFiveArtists();
-  }
-
-  async searchArtist() {
-    const artists = await this.spotifyService.searchTopArtists(1);
-
-    if (artists) {
-      this.topArtist = artists[0];
-    } else {
-      console.log('Artistas não encontrados');
+    this.searchArtists();
+    if (this.autoSlide) {
+      this.autoSlideImages();
     }
   }
 
-  async searchFiveArtists() {
-    this.topFiveArtists = await this.spotifyService.searchTopArtists(5);
-    console.log(this.topFiveArtists);
+  // muda a imagem a cada 4 segundos
+  autoSlideImages() {
+    setInterval(() => {
+      this.onNextClick();
+    }, this.slideInterval);
+  }
+
+  async searchArtists() {
+    const artists = await this.spotifyService.searchTopArtists(5);
+
+    if (artists) {
+      this.topArtists = artists;
+    } else {
+      console.log('Artists not found');
+    }
   }
 
   selectImage(index: number): void {
@@ -46,14 +56,14 @@ export class TopArtistComponent {
 
   onPrevClick() {
     if (this.selectedIndex === 0) {
-      this.selectedIndex = this.topFiveArtists.length - 1;
+      this.selectedIndex = this.topArtists.length - 1;
     } else {
       this.selectedIndex--;
     }
   }
 
   onNextClick() {
-    if (this.selectedIndex === this.topFiveArtists.length -1) {
+    if (this.selectedIndex === this.topArtists.length - 1) {
       this.selectedIndex = 0;
     } else {
       this.selectedIndex++;
