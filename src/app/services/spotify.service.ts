@@ -13,6 +13,7 @@ import {
   SpotifyOfPlaylist,
   SpotifyOfUser,
 } from '../Common/spotifyHelper';
+import { newMusic } from '../Common/factories';
 
 @Injectable({
   providedIn: 'root',
@@ -96,6 +97,12 @@ export class SpotifyService {
   async playMusic(musicId: string) {
     await this.spotifyApi.queue(musicId);
     await this.spotifyApi.skipToNext();
+  }
+
+  async getCurrentMusic(): Promise<Imusic> {
+    const music = await this.spotifyApi.getMyCurrentPlayingTrack();
+
+    return SpotifyOfMusics(music.item!);
   }
 
   logout() {
