@@ -105,6 +105,12 @@ export class SpotifyService {
     return SpotifyOfMusics(music.item!);
   }
 
+  async getSearchArtist(artist: string) {
+    const searchArtist = await this.spotifyApi.searchArtists(artist);
+    console.log(searchArtist);
+    return searchArtist;
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);

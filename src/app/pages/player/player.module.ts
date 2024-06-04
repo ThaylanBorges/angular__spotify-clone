@@ -11,6 +11,8 @@ import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.com
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RecentSearchesComponent } from 'src/app/components/recent-searches/recent-searches.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HomeComponent,
     TopArtistComponent,
     RightPanelComponent,
+    RecentSearchesComponent,
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
+    FormsModule,
     RouterModule.forChild(PlayerRotes),
   ],
 })

@@ -35,13 +35,11 @@ export class HomeComponent {
 
   async getMusics() {
     this.musics = await this.spotifyService.searchMusic();
-    console.log(this.musics);
   }
 
   async getCurrentMusic() {
     const sub = this.playerService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
-      console.log('Música atual', this.currentMusic);
     });
 
     this.subs.push(sub);

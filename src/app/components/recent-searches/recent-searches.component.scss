@@ -1,0 +1,45 @@
+@import "variables";
+
+:host {
+  input {
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 8px;
+    border-color: $transparentBlack-30;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $primary-color;
+
+    &::placeholder {
+      color: $transparentBlack-30;
+      font-size: 0.9rem;
+    }
+
+    &:focus,
+    &:active {
+      border: 2px solid $primary-color;
+    }
+  }
+
+  .suggestions {
+    flex-wrap: wrap;
+
+    span {
+      background-color: $background-color2;
+      margin-right: 5px;
+      padding: 5px 10px;
+      color: $transparentBlack-70;
+      border: 1px solid $transparentBlack-30;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      border-radius: 20px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb($primary-color, 0.5);
+        color: $background-color2;
+      }
+    }
+  }
+}
