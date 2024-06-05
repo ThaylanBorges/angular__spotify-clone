@@ -9,7 +9,9 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   styleUrls: ['./footer-user.component.scss'],
 })
 export class FooterUserComponent {
+  // ícone de sair
   logoutIcon = faSignOut;
+
   user!: Iuser;
 
   constructor(private spotifyService: SpotifyService) {}

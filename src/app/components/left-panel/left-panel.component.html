@@ -5,21 +5,21 @@
   <div class="menu-container flex options">
     <app-menu-button
       [description]="'Home'"
-      (click)="clickButton('home')"
+      (click)="clickButtonMenu('home')"
       [selected]="selectedMenu === 'home'"
     >
       <fa-icon [icon]="homeIcon"></fa-icon>
     </app-menu-button>
     <app-menu-button
       [description]="'Pesquisar'"
-      (click)="clickButton('research')"
+      (click)="clickButtonMenu('research')"
       [selected]="selectedMenu === 'research'"
     >
       <fa-icon [icon]="searchIcon"></fa-icon>
     </app-menu-button>
     <app-menu-button
       [description]="'Artistas'"
-      (click)="clickButton('artist')"
+      (click)="clickButtonMenu('artist')"
       [selected]="selectedMenu === 'artist'"
     >
       <fa-icon [icon]="artistIcon"></fa-icon>
@@ -35,7 +35,7 @@
       *ngFor="let playlist of playlists"
       [description]="playlist.name"
       [selected]="selectedMenu === playlist.id"
-      (click)="clickButton(playlist.id)"
+      (click)="clickButtonMenu(playlist.id)"
     >
       <fa-icon [icon]="playlistIcon"></fa-icon>
     </app-menu-button>

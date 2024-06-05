@@ -75,7 +75,7 @@ export class SpotifyService {
     localStorage.setItem('token', token);
   }
 
-  async searchUserPlaylist(offset = 0, limit = 50): Promise<Iplaylist[]> {
+  async getUserPlaylist(offset = 0, limit = 50): Promise<Iplaylist[]> {
     const playlist = await this.spotifyApi.getUserPlaylists(this.user.id, {
       offset,
       limit,
@@ -84,12 +84,12 @@ export class SpotifyService {
     return playlist.items.map(SpotifyOfPlaylist);
   }
 
-  async searchTopArtists(limit = 10): Promise<Iartist[]> {
+  async getMyTopArtists(limit = 10): Promise<Iartist[]> {
     const artists = await this.spotifyApi.getMyTopArtists({ limit });
     return artists.items.map(SpotifyOfArtist);
   }
 
-  async searchMusic(offset = 0, limit = 50): Promise<Imusic[]> {
+  async getMySavedMusic(offset = 0, limit = 50): Promise<Imusic[]> {
     const musics = await this.spotifyApi.getMySavedTracks({ offset, limit });
     return musics.items.map((x) => SpotifyOfMusics(x.track));
   }
@@ -105,10 +105,14 @@ export class SpotifyService {
     return SpotifyOfMusics(music.item!);
   }
 
-  async getSearchArtist(artist: string) {
-    const searchArtist = await this.spotifyApi.searchArtists(artist);
-    console.log(searchArtist);
-    return searchArtist;
+  async search(value: string) {
+    const search = await this.spotifyApi.search(value, [
+      'artist',
+      'playlist',
+      'track',
+    ]);
+
+    return search;
   }
 
   logout() {

@@ -1,14 +1,15 @@
 import { SpotifyService } from './../../services/spotify.service';
 import { Component } from '@angular/core';
 import { Iplaylist } from 'src/app/interfaces/Iplaylist';
+import { Router } from '@angular/router';
 
+// ícones importados
 import {
   faGuitar,
   faHome,
   faMusic,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-panel',
@@ -20,7 +21,7 @@ export class LeftPanelComponent {
 
   playlists: Iplaylist[] = [];
 
-  // icons
+  // ícones
   homeIcon = faHome;
   searchIcon = faSearch;
   artistIcon = faGuitar;
@@ -32,12 +33,12 @@ export class LeftPanelComponent {
     this.getPlaylist();
   }
 
-  clickButton(button: string) {
+  clickButtonMenu(button: string) {
     this.selectedMenu = button;
     this.router.navigateByUrl('/player/' + this.selectedMenu);
   }
 
   async getPlaylist() {
-    this.playlists = await this.spotifyService.searchUserPlaylist();
+    this.playlists = await this.spotifyService.getUserPlaylist();
   }
 }

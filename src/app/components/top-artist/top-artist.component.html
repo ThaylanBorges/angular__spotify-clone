@@ -1,5 +1,5 @@
 <div class="carousel p-20">
-  <div *ngFor="let artist of topArtists; let i = index">
+  <div *ngFor="let artist of topFiveArtists; let i = index">
     <div
       class="image-container fade"
       [ngClass]="{ 'image-active': selectedIndex === i }"
@@ -17,7 +17,7 @@
   <div class="carousel-dot flex">
     <span
       class="dot"
-      *ngFor="let dot of topArtists; let i = index"
+      *ngFor="let dot of topFiveArtists; let i = index"
       [ngClass]="{ active: selectedIndex === i }"
       (click)="selectImage(i)"
     ></span>

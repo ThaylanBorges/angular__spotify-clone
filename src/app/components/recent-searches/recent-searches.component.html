@@ -5,10 +5,11 @@
   (keyup.Enter)="searche(researchField)"
 />
 <div class="suggestions flex">
-  <span
-    *ngFor="let suggestion of recentSearches"
-    (click)="setSearch(suggestion)"
-  >
-    {{ suggestion }}
+  <span>
+    {{ artist.name }}
+  </span>
+  <span *ngFor="let playlist of playlists"> {{ playlist.name }} </span>
+  <span *ngFor="let music of musics">
+    {{ music.title }}
   </span>
 </div>

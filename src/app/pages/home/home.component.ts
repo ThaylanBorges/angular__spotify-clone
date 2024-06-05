@@ -16,16 +16,16 @@ export class HomeComponent {
     private spotifyService: SpotifyService,
     private playerService: PlayerService
   ) {}
+  playIcon = faPlay;
 
   musics: Imusic[] = [];
+
   currentMusic: Imusic = newMusic();
 
   subs: Subscription[] = [];
 
-  playIcon = faPlay;
-
   ngOnInit() {
-    this.getMusics();
+    this.getMyMusics();
     this.getCurrentMusic();
   }
 
@@ -33,8 +33,12 @@ export class HomeComponent {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
-  async getMusics() {
-    this.musics = await this.spotifyService.searchMusic();
+  async getMyMusics() {
+    this.musics = await this.spotifyService.getMySavedMusic();
+  }
+
+  getArtist(music: Imusic) {
+    return music.artists.map((artist) => artist.name).join(', ');
   }
 
   async getCurrentMusic() {
@@ -43,10 +47,6 @@ export class HomeComponent {
     });
 
     this.subs.push(sub);
-  }
-
-  getArtist(music: Imusic) {
-    return music.artists.map((artist) => artist.name).join(', ');
   }
 
   async playMusic(music: Imusic) {

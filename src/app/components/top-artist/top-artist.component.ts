@@ -13,21 +13,21 @@ import {
   styleUrls: ['./top-artist.component.scss'],
 })
 export class TopArtistComponent {
-  topArtists: Iartist[] = newArtists();
+  topFiveArtists: Iartist[] = newArtists();
 
   // elementos do carrossel
   selectedIndex = 0;
   autoSlide = true;
   slideInterval = 4000;
 
-  // icones de carrossel
+  // ícones de carrossel
   faArrowLeft = faArrowAltCircleLeft;
   faArrowRight = faArrowAltCircleRight;
 
   constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit() {
-    this.searchArtists();
+    this.getMyFiveArtists();
     if (this.autoSlide) {
       this.autoSlideImages();
     }
@@ -40,11 +40,11 @@ export class TopArtistComponent {
     }, this.slideInterval);
   }
 
-  async searchArtists() {
-    const artists = await this.spotifyService.searchTopArtists(5);
+  async getMyFiveArtists() {
+    const artists = await this.spotifyService.getMyTopArtists(5);
 
     if (artists) {
-      this.topArtists = artists;
+      this.topFiveArtists = artists;
     } else {
       console.log('Artists not found');
     }
@@ -56,14 +56,14 @@ export class TopArtistComponent {
 
   onPrevClick() {
     if (this.selectedIndex === 0) {
-      this.selectedIndex = this.topArtists.length - 1;
+      this.selectedIndex = this.topFiveArtists.length - 1;
     } else {
       this.selectedIndex--;
     }
   }
 
   onNextClick() {
-    if (this.selectedIndex === this.topArtists.length - 1) {
+    if (this.selectedIndex === this.topFiveArtists.length - 1) {
       this.selectedIndex = 0;
     } else {
       this.selectedIndex++;
