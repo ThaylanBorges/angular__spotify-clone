@@ -13,7 +13,6 @@ import {
   SpotifyOfPlaylist,
   SpotifyOfUser,
 } from '../Common/spotifyHelper';
-import { newMusic } from '../Common/factories';
 
 @Injectable({
   providedIn: 'root',
@@ -105,12 +104,14 @@ export class SpotifyService {
     return SpotifyOfMusics(music.item!);
   }
 
-  async search(value: string) {
-    const search = await this.spotifyApi.search(value, [
-      'artist',
-      'playlist',
-      'track',
-    ]);
+  async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {
+    const search = await this.spotifyApi.search(
+      value,
+      ['artist', 'playlist', 'track'],
+      { limit }
+    );
+
+    console.log(search);
 
     return search;
   }

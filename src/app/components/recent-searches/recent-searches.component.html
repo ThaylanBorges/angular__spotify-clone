@@ -2,14 +2,19 @@
   type="text"
   [(ngModel)]="researchField"
   placeholder="Artistas, Músicas, Playlists"
-  (keyup.Enter)="searche(researchField)"
+  (keyup.Enter)="setAndSearch(researchField)"
 />
-<div class="suggestions flex">
-  <span>
-    {{ artist.name }}
-  </span>
-  <span *ngFor="let playlist of playlists"> {{ playlist.name }} </span>
-  <span *ngFor="let music of musics">
-    {{ music.title }}
-  </span>
+<div class="flex suggestions" *ngIf="resultOfSearch === true">
+  <div class="artist">
+    <img class="image-artist" [src]="artist.imageUrl" />
+    <span>{{ artist.name }}</span>
+  </div>
+  <div class="playlist" *ngFor="let playlist of playlists">
+    <img class="image" [src]="playlist.imageUrl" />
+    <span>{{ playlist.name }}</span>
+  </div>
+  <div class="music" *ngFor="let music of musics">
+    <img class="image" [src]="music.album.imageUrl" />
+    <span>{{ music.title }}</span>
+  </div>
 </div>

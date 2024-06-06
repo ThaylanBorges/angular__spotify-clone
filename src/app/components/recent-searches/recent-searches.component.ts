@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { newArtist } from 'src/app/Common/factories';
+import { newArtist, newMusics, newPlaylist } from 'src/app/Common/factories';
 import {
   SpotifyOfArtist,
   SpotifyOfMusics,
@@ -16,59 +16,63 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   styleUrls: ['./recent-searches.component.scss'],
 })
 export class RecentSearchesComponent {
-  resultSearch!: SpotifyApi.SearchResponse;
   artist: Iartist = newArtist();
-  musics: Imusic[] = [];
-  playlists: Iplaylist[] = [];
+  musics: Imusic[] = newMusics(); // Assuming newMusics can take a count parameter
+  playlists: Iplaylist[] = newPlaylist(); // Assuming newPlaylist can take a count parameter
+  resultOfSearch: boolean = false;
   researchField = '';
 
   constructor(private spotifyService: SpotifyService) {}
 
-  setSearch(value: string) {
-    this.researchField = value;
+  async setAndSearch(value: string) {
+    const cleanedValue = this.cleanSearchQuery(value);
+    if (!cleanedValue) {
+      console.log('Consulta inválida');
+      this.resultOfSearch = false;
+      return;
+    }
+    this.researchField = cleanedValue;
+    await this.search(cleanedValue);
   }
 
-  async searche(value: string) {
+  private cleanSearchQuery(value: string): string {
+    const cleanedValue = value.trim();
+    const isInvalid =
+      /[^a-zA-Z0-9\s]/.test(cleanedValue) || cleanedValue === '';
+    return isInvalid ? '' : cleanedValue;
+  }
+
+  async search(value: string) {
     try {
       const search = await this.spotifyService.search(value);
       this.processSearchResults(search);
+      this.resultOfSearch = true;
     } catch (error) {
       console.error('Erro ao realizar busca:', error);
+      this.resultOfSearch = false;
     }
   }
 
   private processSearchResults(search: SpotifyApi.SearchResponse) {
-    this.searchArtist(search);
-    this.searchMusic(search);
-    this.searchPlaylist(search);
+    this.artist =
+      this.getFirstResult(search.artists, SpotifyOfArtist) || newArtist();
+    this.playlists = this.getMappedResults(search.playlists, SpotifyOfPlaylist);
+    this.musics = this.getMappedResults(search.tracks, SpotifyOfMusics);
   }
 
-  private searchArtist(search: SpotifyApi.SearchResponse) {
-    const resultSearch = search.artists;
-    if (resultSearch && resultSearch.items.length > 0) {
-      this.artist = SpotifyOfArtist(resultSearch.items[0]);
-      console.log(this.artist);
-    } else {
-      console.log('Nenhum artista encontrado');
-    }
+  private getFirstResult<T, U>(
+    searchResult: SpotifyApi.PagingObject<T> | undefined,
+    mapFn: (item: T) => U
+  ): U | null {
+    return searchResult && searchResult.items.length > 0
+      ? mapFn(searchResult.items[0])
+      : null;
   }
 
-  private searchPlaylist(search: SpotifyApi.SearchResponse) {
-    const resultSearch = search.playlists;
-    if (resultSearch) {
-      this.playlists = resultSearch.items.map(SpotifyOfPlaylist);
-      console.log(this.playlists);
-    } else {
-      console.log('Nenhuma playlist encontrada');
-    }
-  }
-
-  private searchMusic(search: SpotifyApi.SearchResponse) {
-    const resultSearch = search.tracks;
-    if (resultSearch) {
-      this.musics = resultSearch.items.map(SpotifyOfMusics);
-    } else {
-      console.log('Nenhuma música encontrada');
-    }
+  private getMappedResults<T, U>(
+    searchResult: SpotifyApi.PagingObject<T> | undefined,
+    mapFn: (item: T) => U
+  ): U[] {
+    return searchResult ? searchResult.items.map(mapFn) : [];
   }
 }

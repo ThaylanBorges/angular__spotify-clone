@@ -24,21 +24,31 @@
 
   .suggestions {
     flex-wrap: wrap;
+    margin-top: 15px;
+    gap: 15px;
 
-    span {
-      background-color: $background-color2;
-      margin-right: 5px;
-      padding: 5px 10px;
-      color: $transparentBlack-70;
-      border: 1px solid $transparentBlack-30;
-      margin-top: 10px;
-      font-size: 0.9rem;
-      border-radius: 20px;
+    .artist,
+    .playlist,
+    .music {
+      width: 100%;
+      display: flex;
+      align-items: center;
       cursor: pointer;
 
-      &:hover {
-        background-color: rgb($primary-color, 0.5);
-        color: $background-color2;
+      span {
+        padding-left: 15px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .image-artist {
+        width: 60px;
+        border-radius: 50%;
+      }
+
+      .image {
+        width: 60px;
+        border-radius: 10px;
       }
     }
   }
