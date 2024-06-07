@@ -27,28 +27,38 @@
     margin-top: 15px;
     gap: 15px;
 
-    .artist,
-    .playlist,
-    .music {
+    .suggestions-item {
       width: 100%;
       display: flex;
       align-items: center;
       cursor: pointer;
 
-      span {
-        padding-left: 15px;
-        font-size: 1rem;
-        font-weight: 500;
-      }
-
       .image-artist {
         width: 60px;
+
         border-radius: 50%;
       }
 
       .image {
         width: 60px;
         border-radius: 10px;
+      }
+
+      .legend {
+        flex-direction: column;
+        padding-left: 15px;
+
+        span {
+          &:first-child {
+            font-size: 1rem;
+            font-weight: 500;
+          }
+
+          &:not(:first-child) {
+            font-size: 0.8rem;
+            font-weight: 300;
+          }
+        }
       }
     }
   }

@@ -17,10 +17,10 @@ import { SpotifyService } from 'src/app/services/spotify.service';
 })
 export class RecentSearchesComponent {
   artist: Iartist = newArtist();
-  musics: Imusic[] = newMusics(); // Assuming newMusics can take a count parameter
-  playlists: Iplaylist[] = newPlaylist(); // Assuming newPlaylist can take a count parameter
+  musics: Imusic[] = newMusics();
+  playlists: Iplaylist[] = newPlaylist();
   resultOfSearch: boolean = false;
-  researchField = '';
+  researchField = 'korn';
 
   constructor(private spotifyService: SpotifyService) {}
 
@@ -53,14 +53,14 @@ export class RecentSearchesComponent {
     }
   }
 
-  private processSearchResults(search: SpotifyApi.SearchResponse) {
+  processSearchResults(search: SpotifyApi.SearchResponse) {
     this.artist =
       this.getFirstResult(search.artists, SpotifyOfArtist) || newArtist();
     this.playlists = this.getMappedResults(search.playlists, SpotifyOfPlaylist);
     this.musics = this.getMappedResults(search.tracks, SpotifyOfMusics);
   }
 
-  private getFirstResult<T, U>(
+  getFirstResult<T, U>(
     searchResult: SpotifyApi.PagingObject<T> | undefined,
     mapFn: (item: T) => U
   ): U | null {
@@ -69,10 +69,14 @@ export class RecentSearchesComponent {
       : null;
   }
 
-  private getMappedResults<T, U>(
+  getMappedResults<T, U>(
     searchResult: SpotifyApi.PagingObject<T> | undefined,
     mapFn: (item: T) => U
   ): U[] {
     return searchResult ? searchResult.items.map(mapFn) : [];
+  }
+
+  playMusic(music: Imusic) {
+    this.spotifyService.playMusic(music.id);
   }
 }

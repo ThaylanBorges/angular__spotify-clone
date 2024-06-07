@@ -4,17 +4,30 @@
   placeholder="Artistas, Músicas, Playlists"
   (keyup.Enter)="setAndSearch(researchField)"
 />
-<div class="flex suggestions" *ngIf="resultOfSearch === true">
-  <div class="artist">
-    <img class="image-artist" [src]="artist.imageUrl" />
-    <span>{{ artist.name }}</span>
+<div class="suggestions flex" *ngIf="resultOfSearch">
+  <div class="suggestions-item artist">
+    <img class="image" [src]="artist.imageUrl" />
+    <div class="legend flex">
+      <span>{{ artist.name }}</span>
+      <span>Artista</span>
+    </div>
   </div>
-  <div class="playlist" *ngFor="let playlist of playlists">
+  <div class="suggestions-item playlist" *ngFor="let playlist of playlists">
     <img class="image" [src]="playlist.imageUrl" />
-    <span>{{ playlist.name }}</span>
+    <div class="legend flex">
+      <span>{{ playlist.name }}</span>
+      <span>Playlist</span>
+    </div>
   </div>
-  <div class="music" *ngFor="let music of musics">
+  <div
+    class="suggestions-item music"
+    *ngFor="let music of musics"
+    (click)="playMusic(music)"
+  >
     <img class="image" [src]="music.album.imageUrl" />
-    <span>{{ music.title }}</span>
+    <div class="legend flex">
+      <span>{{ music.title }}</span>
+      <span>Música</span>
+    </div>
   </div>
 </div>
