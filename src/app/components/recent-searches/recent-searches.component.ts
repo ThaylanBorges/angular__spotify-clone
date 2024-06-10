@@ -21,6 +21,14 @@ export class RecentSearchesComponent {
   playlists: Iplaylist[] = newPlaylist();
   resultOfSearch: boolean = false;
   researchField = 'korn';
+  suggestions: string[] = [
+    'Pagode',
+    'Rock',
+    'Top Brasil',
+    'Top Mundo',
+    'Samba',
+    'Certanejo',
+  ];
 
   constructor(private spotifyService: SpotifyService) {}
 
@@ -74,6 +82,11 @@ export class RecentSearchesComponent {
     mapFn: (item: T) => U
   ): U[] {
     return searchResult ? searchResult.items.map(mapFn) : [];
+  }
+
+  async clickSuggetion(suggestions: string) {
+    this.researchField = suggestions;
+    await this.setAndSearch(suggestions);
   }
 
   playMusic(music: Imusic) {

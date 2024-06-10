@@ -25,7 +25,7 @@ export class PlayerService {
     // causo loop
     this.timerId = setTimeout(async () => {
       await this.getCurrentMusic();
-    }, 3000);
+    }, 4000);
   }
 
   setCurrentMusic(music: Imusic) {

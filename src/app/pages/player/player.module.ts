@@ -13,6 +13,7 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RecentSearchesComponent } from 'src/app/components/recent-searches/recent-searches.component';
 import { FormsModule } from '@angular/forms';
+import { PlayerCardComponent } from 'src/app/components/player-card/player-card.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     TopArtistComponent,
     RightPanelComponent,
     RecentSearchesComponent,
+    PlayerCardComponent,
   ],
   imports: [
     CommonModule,

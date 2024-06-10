@@ -4,15 +4,15 @@
   placeholder="Artistas, Músicas, Playlists"
   (keyup.Enter)="setAndSearch(researchField)"
 />
-<div class="suggestions flex" *ngIf="resultOfSearch">
-  <div class="suggestions-item artist">
-    <img class="image" [src]="artist.imageUrl" />
+<div class="resultSearch flex" *ngIf="resultOfSearch; else notFound">
+  <div class="resultSearch-item artist">
+    <img class="image-artist" [src]="artist.imageUrl" />
     <div class="legend flex">
       <span>{{ artist.name }}</span>
       <span>Artista</span>
     </div>
   </div>
-  <div class="suggestions-item playlist" *ngFor="let playlist of playlists">
+  <div class="resultSearch-item playlist" *ngFor="let playlist of playlists">
     <img class="image" [src]="playlist.imageUrl" />
     <div class="legend flex">
       <span>{{ playlist.name }}</span>
@@ -20,14 +20,24 @@
     </div>
   </div>
   <div
-    class="suggestions-item music"
+    class="resultSearch-item music"
     *ngFor="let music of musics"
     (click)="playMusic(music)"
   >
     <img class="image" [src]="music.album.imageUrl" />
     <div class="legend flex">
-      <span>{{ music.title }}</span>
+      <span>{{ music.title }}asdasdassdfghjkljhgfdssdfghjklkjhgrew</span>
       <span>Música</span>
     </div>
   </div>
 </div>
+<ng-template #notFound>
+  <div class="suggestions">
+    <span
+      class="suggestions-itens"
+      *ngFor="let suggestion of suggestions"
+      (click)="clickSuggetion(suggestion)"
+      >{{ suggestion }}</span
+    >
+  </div>
+</ng-template>
