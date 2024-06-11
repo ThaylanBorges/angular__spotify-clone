@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  IconDefinition,
   faPause,
   faPlay,
   faStepBackward,
@@ -22,8 +23,9 @@ export class PlayerCardComponent {
   // ícones
   iconBackArrow = faStepBackward;
   iconPassArrow = faStepForward;
-  iconPlayer = faPlay;
-  icoPause = faPause;
+  iconPlayerCard: IconDefinition = faPlay;
+
+  isPlaying: boolean = false;
 
   constructor(private playerService: PlayerService) {}
 
@@ -41,5 +43,32 @@ export class PlayerCardComponent {
     });
 
     this.subs.push(sub);
+  }
+
+  async returnMusic() {
+    await this.playerService.returnMusic();
+  }
+
+  async nextMusic() {
+    await this.playerService.nextMusic();
+  }
+
+  async togglePlayPause(): Promise<void> {
+    this.isPlaying = !this.isPlaying;
+    this.iconPlayerCard = this.isPlaying ? faPause : faPlay;
+
+    if (this.isPlaying) {
+      await this.playerService.unpauseMusic();
+    } else {
+      await this.playerService.pauseMusic();
+    }
+  }
+
+  async pauseMusic() {
+    await this.playerService.pauseMusic();
+  }
+
+  async unpauseMusic() {
+    await this.playerService.unpauseMusic();
   }
 }

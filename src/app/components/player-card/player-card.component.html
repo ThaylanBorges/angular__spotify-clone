@@ -6,9 +6,9 @@
   <div class="controls">
     <span> {{ music.title }}</span>
     <div class="buttons">
-      <fa-icon [icon]="iconBackArrow"></fa-icon>
-      <fa-icon [icon]="iconPlayer"></fa-icon>
-      <fa-icon [icon]="iconPassArrow"></fa-icon>
+      <fa-icon [icon]="iconBackArrow" (click)="returnMusic()"></fa-icon>
+      <fa-icon [icon]="iconPlayerCard" (click)="togglePlayPause()"></fa-icon>
+      <fa-icon [icon]="iconPassArrow" (click)="nextMusic()"></fa-icon>
     </div>
   </div>
 </div>

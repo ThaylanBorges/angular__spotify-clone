@@ -31,4 +31,20 @@ export class PlayerService {
   setCurrentMusic(music: Imusic) {
     this.currentMusic.next(music);
   }
+
+  async returnMusic() {
+    await this.spotifyService.returnMusic();
+  }
+
+  async nextMusic() {
+    await this.spotifyService.nextMusic();
+  }
+
+  async pauseMusic() {
+    await this.spotifyService.pauseMusic();
+  }
+
+  async unpauseMusic() {
+    await this.spotifyService.unpauseMusic();
+  }
 }

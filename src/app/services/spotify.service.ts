@@ -104,7 +104,7 @@ export class SpotifyService {
     return SpotifyOfMusics(music.item!);
   }
 
-  async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {
+  async search(value: string, limit = 2): Promise<SpotifyApi.SearchResponse> {
     const search = await this.spotifyApi.search(
       value,
       ['artist', 'playlist', 'track'],
@@ -114,6 +114,22 @@ export class SpotifyService {
     console.log(search);
 
     return search;
+  }
+
+  async returnMusic() {
+    await this.spotifyApi.skipToPrevious();
+  }
+
+  async nextMusic() {
+    await this.spotifyApi.skipToNext();
+  }
+
+  async pauseMusic() {
+    await this.spotifyApi.pause();
+  }
+
+  async unpauseMusic() {
+    await this.spotifyApi.play();
   }
 
   logout() {
