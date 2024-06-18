@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { newArtist, newMusics, newPlaylist } from 'src/app/Common/factories';
 import {
   SpotifyOfArtist,
@@ -11,27 +13,34 @@ import { Iplaylist } from 'src/app/interfaces/Iplaylist';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
-  selector: 'app-recent-searches',
-  templateUrl: './recent-searches.component.html',
-  styleUrls: ['./recent-searches.component.scss'],
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
 })
-export class RecentSearchesComponent {
+export class SearchComponent {
+  // crição das propriedades e iniciando elas com factories
   artist: Iartist = newArtist();
   musics: Imusic[] = newMusics();
   playlists: Iplaylist[] = newPlaylist();
+
   resultOfSearch: boolean = false;
-  researchField = 'korn';
-  suggestions: string[] = [
-    'Pagode',
-    'Rock',
-    'Top Brasil',
-    'Top Mundo',
-    'Samba',
-    'Certanejo',
-  ];
+  researchField = new FormControl(''); // utilizando FormControl para debounce
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private spotifyService: SpotifyService) {
+    this.initializeSearch();
+  }
 
+  // método para inicializar a pesquisa com debounce
+  private initializeSearch() {
+    this.researchField.valueChanges
+      .pipe(
+        debounceTime(300), // aguarda 300ms após a última tecla pressionada
+        distinctUntilChanged() // ignora se o valor anterior é igual ao próximo
+      )
+      .subscribe((value) => this.setAndSearch(value!));
+  }
+
+  // método que filtra e seta o dado para a service pesquisar
   async setAndSearch(value: string) {
     const cleanedValue = this.cleanSearchQuery(value);
     if (!cleanedValue) {
@@ -39,10 +48,11 @@ export class RecentSearchesComponent {
       this.resultOfSearch = false;
       return;
     }
-    this.researchField = cleanedValue;
+    this.researchField.setValue(cleanedValue, { emitEvent: false });
     await this.search(cleanedValue);
   }
 
+  // método que filtra a string para garantir que o dado não será falso
   private cleanSearchQuery(value: string): string {
     const cleanedValue = value.trim();
     const isInvalid =
@@ -50,6 +60,7 @@ export class RecentSearchesComponent {
     return isInvalid ? '' : cleanedValue;
   }
 
+  // método usado para fazer a pesquisa dos dados passando um atributo
   async search(value: string) {
     try {
       const search = await this.spotifyService.search(value);
@@ -61,6 +72,7 @@ export class RecentSearchesComponent {
     }
   }
 
+  // processa os resultados da pesquisa
   processSearchResults(search: SpotifyApi.SearchResponse) {
     this.artist =
       this.getFirstResult(search.artists, SpotifyOfArtist) || newArtist();
@@ -68,6 +80,7 @@ export class RecentSearchesComponent {
     this.musics = this.getMappedResults(search.tracks, SpotifyOfMusics);
   }
 
+  // obtém o primeiro resultado da pesquisa
   getFirstResult<T, U>(
     searchResult: SpotifyApi.PagingObject<T> | undefined,
     mapFn: (item: T) => U
@@ -77,6 +90,7 @@ export class RecentSearchesComponent {
       : null;
   }
 
+  // mapeia os resultados da pesquisa
   getMappedResults<T, U>(
     searchResult: SpotifyApi.PagingObject<T> | undefined,
     mapFn: (item: T) => U
@@ -84,11 +98,14 @@ export class RecentSearchesComponent {
     return searchResult ? searchResult.items.map(mapFn) : [];
   }
 
-  async clickSuggetion(suggestions: string) {
-    this.researchField = suggestions;
-    await this.setAndSearch(suggestions);
+  // sugestões de pesquisa
+  suggestion($event: string) {
+    const resultSuggestion = $event;
+    this.researchField.setValue(resultSuggestion, { emitEvent: false });
+    this.search(resultSuggestion);
   }
 
+  // toca a música selecionada
   playMusic(music: Imusic) {
     this.spotifyService.playMusic(music.id);
   }

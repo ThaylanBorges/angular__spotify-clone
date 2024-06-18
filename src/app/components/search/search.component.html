@@ -1,8 +1,7 @@
 <input
   type="text"
-  [(ngModel)]="researchField"
+  [formControl]="researchField"
   placeholder="Artistas, Músicas, Playlists"
-  (keyup.Enter)="setAndSearch(researchField)"
 />
 <div class="resultSearch flex" *ngIf="resultOfSearch; else notFound">
   <div class="resultSearch-item artist">
@@ -32,12 +31,7 @@
   </div>
 </div>
 <ng-template #notFound>
-  <div class="suggestions">
-    <span
-      class="suggestions-itens"
-      *ngFor="let suggestion of suggestions"
-      (click)="clickSuggetion(suggestion)"
-      >{{ suggestion }}</span
-    >
-  </div>
+  <app-suggestions-search
+    (dataEmitter)="suggestion($event)"
+  ></app-suggestions-search>
 </ng-template>
