@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {
   IconDefinition,
-  faPause,
-  faPlay,
+  faPauseCircle,
+  faPlayCircle,
   faStepBackward,
   faStepForward,
 } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,7 @@ export class PlayerCardComponent {
   // ícones
   iconBackArrow = faStepBackward;
   iconPassArrow = faStepForward;
-  iconPlayerCard: IconDefinition = faPlay;
+  iconPlayerCard: IconDefinition = faPlayCircle;
 
   isPlaying: boolean = false;
 
@@ -55,7 +55,7 @@ export class PlayerCardComponent {
 
   async togglePlayPause(): Promise<void> {
     this.isPlaying = !this.isPlaying;
-    this.iconPlayerCard = this.isPlaying ? faPause : faPlay;
+    this.iconPlayerCard = this.isPlaying ? faPauseCircle : faPlayCircle;
 
     if (this.isPlaying) {
       await this.playerService.unpauseMusic();

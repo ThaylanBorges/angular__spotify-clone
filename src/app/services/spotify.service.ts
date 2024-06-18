@@ -104,14 +104,12 @@ export class SpotifyService {
     return SpotifyOfMusics(music.item!);
   }
 
-  async search(value: string, limit = 2): Promise<SpotifyApi.SearchResponse> {
+  async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {
     const search = await this.spotifyApi.search(
       value,
       ['artist', 'playlist', 'track'],
       { limit }
     );
-
-    console.log(search);
 
     return search;
   }

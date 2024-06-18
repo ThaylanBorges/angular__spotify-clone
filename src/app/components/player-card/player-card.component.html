@@ -3,11 +3,15 @@
     class="image"
     [style.background-image]="'url(' + music.album.imageUrl + ')'"
   ></div>
+  <span class="music-title"> {{ music.title }}</span>
   <div class="controls">
-    <span> {{ music.title }}</span>
     <div class="buttons">
       <fa-icon [icon]="iconBackArrow" (click)="returnMusic()"></fa-icon>
-      <fa-icon [icon]="iconPlayerCard" (click)="togglePlayPause()"></fa-icon>
+      <fa-icon
+        class="iconPlayer"
+        [icon]="iconPlayerCard"
+        (click)="togglePlayPause()"
+      ></fa-icon>
       <fa-icon [icon]="iconPassArrow" (click)="nextMusic()"></fa-icon>
     </div>
   </div>

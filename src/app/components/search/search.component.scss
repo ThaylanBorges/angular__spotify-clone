@@ -33,13 +33,16 @@
       cursor: pointer;
 
       .image-artist {
-        width: 60px;
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
+        border: solid 1px $transparentBlack-20;
       }
 
       .image {
-        width: 60px;
+        width: 55px;
         border-radius: 10px;
+        border: solid 1px $transparentBlack-20;
       }
     }
   }
@@ -51,7 +54,7 @@
 
     span {
       &:first-child {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 500;
         width: 100%;
         text-overflow: ellipsis;
