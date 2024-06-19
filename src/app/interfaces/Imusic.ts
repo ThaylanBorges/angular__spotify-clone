@@ -1,6 +1,7 @@
 export interface Imusic {
   id: string;
   title: string;
+  time: string;
   artists: {
     id: string;
     name: string;
@@ -10,5 +11,4 @@ export interface Imusic {
     name: string;
     imageUrl: string;
   };
-  time: string;
 }
