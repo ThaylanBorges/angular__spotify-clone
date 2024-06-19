@@ -20,6 +20,7 @@ export class PlayerService {
 
     // obtenho a música
     const music = await this.spotifyService.getCurrentMusic();
+
     this.setCurrentMusic(music);
 
     // causo loop
