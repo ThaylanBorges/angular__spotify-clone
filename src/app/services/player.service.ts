@@ -8,44 +8,53 @@ import { newMusic } from '../Common/factories';
   providedIn: 'root',
 })
 export class PlayerService {
-  currentMusic = new BehaviorSubject<Imusic>(newMusic());
-  timerId: any = null;
+  currentTrack: BehaviorSubject<Imusic> = new BehaviorSubject<Imusic>(
+    newMusic()
+  );
+  isPlaying: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  refreshTimerId: any = null;
 
   constructor(private spotifyService: SpotifyService) {
-    this.getCurrentMusic();
+    this.updateCurrentTrack();
   }
 
-  async getCurrentMusic() {
-    clearTimeout(this.timerId);
+  async updateCurrentTrack() {
+    clearTimeout(this.refreshTimerId);
 
-    // obtenho a música
-    const music = await this.spotifyService.getCurrentMusic();
+    // Obtenho a música atual e o status de reprodução
+    const track = await this.spotifyService.getCurrentMusic();
+    const isTrackPlaying = await this.spotifyService.getIsPlaying();
 
-    this.setCurrentMusic(music);
+    this.setCurrentTrack(track);
+    this.setIsPlaying(isTrackPlaying);
 
-    // causo loop
-    this.timerId = setTimeout(async () => {
-      await this.getCurrentMusic();
+    // Atualiza a música em um loop
+    this.refreshTimerId = setTimeout(async () => {
+      await this.updateCurrentTrack();
     }, 4000);
   }
 
-  setCurrentMusic(music: Imusic) {
-    this.currentMusic.next(music);
+  setCurrentTrack(track: Imusic) {
+    this.currentTrack.next(track);
   }
 
-  async returnMusic() {
+  setIsPlaying(isPlaying: boolean) {
+    this.isPlaying.next(isPlaying);
+  }
+
+  async playPreviousTrack() {
     await this.spotifyService.returnMusic();
   }
 
-  async nextMusic() {
+  async playNextTrack() {
     await this.spotifyService.nextMusic();
   }
 
-  async pauseMusic() {
+  async pauseTrack() {
     await this.spotifyService.pauseMusic();
   }
 
-  async unpauseMusic() {
+  async resumeTrack() {
     await this.spotifyService.unpauseMusic();
   }
 }

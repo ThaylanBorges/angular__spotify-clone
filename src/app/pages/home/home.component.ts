@@ -42,7 +42,7 @@ export class HomeComponent {
   }
 
   async getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.playerService.currentTrack.subscribe((music) => {
       this.currentMusic = music;
     });
 
@@ -52,6 +52,6 @@ export class HomeComponent {
   async playMusic(music: Imusic) {
     await this.spotifyService.playMusic(music.id);
 
-    this.playerService.setCurrentMusic(music);
+    this.playerService.setCurrentTrack(music);
   }
 }

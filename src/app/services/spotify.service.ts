@@ -13,6 +13,7 @@ import {
   SpotifyOfPlaylist,
   SpotifyOfUser,
 } from '../Common/spotifyHelper';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -102,6 +103,13 @@ export class SpotifyService {
     const music = await this.spotifyApi.getMyCurrentPlayingTrack();
 
     return SpotifyOfMusics(music.item!);
+  }
+
+  async getIsPlaying() {
+    const music = await this.spotifyApi.getMyCurrentPlayingTrack();
+    const musicIsPlayng = music.is_playing; // para saber se a musica está tocando
+
+    return musicIsPlayng;
   }
 
   async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {

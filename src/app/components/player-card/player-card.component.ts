@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   IconDefinition,
   faPauseCircle,
@@ -16,59 +16,78 @@ import { PlayerService } from 'src/app/services/player.service';
   templateUrl: './player-card.component.html',
   styleUrls: ['./player-card.component.scss'],
 })
-export class PlayerCardComponent {
-  music: Imusic = newMusic();
-  subs: Subscription[] = [];
+export class PlayerCardComponent implements OnInit, OnDestroy {
+  currentTrack: Imusic = newMusic();
+  playerSubscriptions: Subscription[] = [];
+  isTrackPlaying: boolean = true;
 
-  // ícones
-  iconBackArrow = faStepBackward;
-  iconPassArrow = faStepForward;
-  iconPlayerCard: IconDefinition = faPlayCircle;
-
-  isPlaying: boolean = false;
+  // Ícones
+  iconPreviousTrack = faStepBackward;
+  iconNextTrack = faStepForward;
+  playPauseButtonIcon: IconDefinition = faPlayCircle;
 
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
-    this.getMusicPlaying();
+    this.subscribeToCurrentTrack();
+    this.subscribeToPlaybackStatus();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((subs) => subs.unsubscribe());
+    this.playerSubscriptions.forEach((subscription) =>
+      subscription.unsubscribe()
+    );
   }
 
-  getMusicPlaying() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
-      this.music = music;
-    });
+  subscribeToCurrentTrack(): void {
+    const trackSubscription = this.playerService.currentTrack.subscribe(
+      (track) => {
+        this.currentTrack = track;
+      }
+    );
 
-    this.subs.push(sub);
+    this.playerSubscriptions.push(trackSubscription);
   }
 
-  async returnMusic() {
-    await this.playerService.returnMusic();
+  subscribeToPlaybackStatus(): void {
+    const playbackStatusSubscription = this.playerService.isPlaying.subscribe(
+      (isPlaying) => {
+        this.isTrackPlaying = isPlaying;
+        this.updatePlayPauseButtonIcon();
+      }
+    );
+
+    this.playerSubscriptions.push(playbackStatusSubscription);
   }
 
-  async nextMusic() {
-    await this.playerService.nextMusic();
+  async playPreviousTrack() {
+    await this.playerService.playPreviousTrack();
+    console.log(this.currentTrack.id);
+  }
+
+  async playNextTrack() {
+    await this.playerService.playNextTrack();
+  }
+
+  updatePlayPauseButtonIcon() {
+    this.playPauseButtonIcon = this.isTrackPlaying
+      ? faPauseCircle
+      : faPlayCircle;
   }
 
   async togglePlayPause(): Promise<void> {
-    this.isPlaying = !this.isPlaying;
-    this.iconPlayerCard = this.isPlaying ? faPauseCircle : faPlayCircle;
-
-    if (this.isPlaying) {
-      await this.playerService.unpauseMusic();
+    if (this.isTrackPlaying) {
+      await this.pauseTrack();
     } else {
-      await this.playerService.pauseMusic();
+      await this.resumeTrack();
     }
   }
 
-  async pauseMusic() {
-    await this.playerService.pauseMusic();
+  async pauseTrack() {
+    await this.playerService.pauseTrack();
   }
 
-  async unpauseMusic() {
-    await this.playerService.unpauseMusic();
+  async resumeTrack() {
+    await this.playerService.resumeTrack();
   }
 }
