@@ -3,7 +3,7 @@ import { Iplaylist } from '../interfaces/Iplaylist';
 import { Iuser } from '../interfaces/Iuser';
 import { Imusic } from '../interfaces/Imusic';
 import { addMilliseconds, format } from 'date-fns';
-import { newMusic } from './factories';
+import { newMusic, newPlaylist } from './factories';
 
 export function SpotifyOfUser(
   user: SpotifyApi.CurrentUsersProfileResponse
@@ -22,6 +22,21 @@ export function SpotifyOfPlaylist(
     id: playlist.id,
     name: playlist.name,
     imageUrl: playlist.images.pop()!.url,
+  };
+}
+
+export function SpotifySingleOfPlaylist(
+  playlist: SpotifyApi.SinglePlaylistResponse
+): Iplaylist {
+  if (!playlist) {
+    return newPlaylist();
+  }
+
+  return {
+    id: playlist.id,
+    name: playlist.name,
+    imageUrl: playlist.images.shift()!.url,
+    musics: [],
   };
 }
 
@@ -45,6 +60,7 @@ export function SpotifyOfMusics(musics: SpotifyApi.TrackObjectFull): Imusic {
 
   return {
     id: musics.uri,
+    uri: musics.id,
     title: musics.name,
     artists: musics.artists.map((artist) => ({
       id: artist.id,

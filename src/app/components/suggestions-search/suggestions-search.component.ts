@@ -13,6 +13,8 @@ export class SuggestionsSearchComponent {
     'Top Mundo',
     'Samba',
     'Certanejo',
+    'Hip Hop',
+    'Pop',
   ];
 
   @Output() dataEmitter: EventEmitter<string> = new EventEmitter<string>();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { newMusic } from 'src/app/Common/factories';
 import { Imusic } from 'src/app/interfaces/Imusic';
@@ -19,6 +19,10 @@ export class HomeComponent {
   playIcon = faPlay;
 
   musics: Imusic[] = [];
+
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
+
+  music = '';
 
   currentMusic: Imusic = newMusic();
 

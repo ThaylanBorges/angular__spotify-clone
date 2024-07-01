@@ -12,6 +12,7 @@ import {
   SpotifyOfMusics,
   SpotifyOfPlaylist,
   SpotifyOfUser,
+  SpotifySingleOfPlaylist,
 } from '../Common/spotifyHelper';
 import { Subject } from 'rxjs';
 
@@ -110,6 +111,19 @@ export class SpotifyService {
     const musicIsPlayng = music.is_playing; // para saber se a musica está tocando
 
     return musicIsPlayng;
+  }
+
+  async getPlaylist(playlistId: string, offset = 0, limit = 50) {
+    const playlistSpotify = await this.spotifyApi.getPlaylist(playlistId);
+
+    const plalist = SpotifySingleOfPlaylist(playlistSpotify);
+
+    const musicsSpotify = await this.spotifyApi.getPlaylistTracks(playlistId, {
+      offset,
+      limit,
+    });
+
+    return plalist;
   }
 
   async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {

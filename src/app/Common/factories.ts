@@ -7,6 +7,7 @@ export function newArtist(): Iartist {
     id: '',
     name: '',
     imageUrl: '',
+    musics: [],
   };
 }
 
@@ -16,6 +17,7 @@ export function newArtists(): Iartist[] {
       id: '',
       name: '',
       imageUrl: '',
+      musics: [],
     },
   ];
 }
@@ -23,6 +25,7 @@ export function newArtists(): Iartist[] {
 export function newMusic(): Imusic {
   return {
     id: '',
+    uri: '',
     title: '',
     album: {
       id: '',
@@ -38,6 +41,7 @@ export function newMusics(): Imusic[] {
   return [
     {
       id: '',
+      uri: '',
       title: '',
       album: {
         id: '',
@@ -50,12 +54,10 @@ export function newMusics(): Imusic[] {
   ];
 }
 
-export function newPlaylist(): Iplaylist[] {
-  return [
-    {
-      id: '',
-      name: '',
-      imageUrl: '',
-    },
-  ];
+export function newPlaylist(): Iplaylist {
+  return {
+    id: '',
+    name: '',
+    imageUrl: '',
+  };
 }

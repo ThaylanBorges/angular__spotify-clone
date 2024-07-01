@@ -21,7 +21,7 @@ export class SearchComponent {
   // crição das propriedades e iniciando elas com factories
   artist: Iartist = newArtist();
   musics: Imusic[] = newMusics();
-  playlists: Iplaylist[] = newPlaylist();
+  playlists: Iplaylist[] = [];
 
   resultOfSearch: boolean = false;
   researchField = new FormControl(''); // utilizando FormControl para debounce

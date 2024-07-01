@@ -15,6 +15,7 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
 import { PlayerCardComponent } from 'src/app/components/player-card/player-card.component';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { SuggestionsSearchComponent } from 'src/app/components/suggestions-search/suggestions-search.component';
+import { ListMusicComponent } from '../list-music/list-music.component';
 
 // player Routes
 import { PlayerRotes } from './player.routes';
@@ -31,6 +32,7 @@ import { PlayerRotes } from './player.routes';
     PlayerCardComponent,
     SearchComponent,
     SuggestionsSearchComponent,
+    ListMusicComponent,
   ],
   imports: [
     CommonModule,

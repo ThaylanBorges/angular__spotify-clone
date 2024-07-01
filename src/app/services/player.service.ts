@@ -18,6 +18,10 @@ export class PlayerService {
     this.updateCurrentTrack();
   }
 
+  async getPlaylist(playlistId: string) {
+    await this.spotifyService.getPlaylist(playlistId);
+  }
+
   async updateCurrentTrack() {
     clearTimeout(this.refreshTimerId);
 
