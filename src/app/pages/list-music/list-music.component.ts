@@ -1,10 +1,10 @@
-import { newMusic } from 'src/app/Common/factories';
+import { SpotifyService } from 'src/app/services/spotify.service';
+import { newMusic, newPlaylist } from 'src/app/Common/factories';
 import { Component } from '@angular/core';
 import { Imusic } from 'src/app/interfaces/Imusic';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { PlayerService } from 'src/app/services/player.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-music',
@@ -18,11 +18,12 @@ export class ListMusicComponent {
 
   currtMusic: Imusic = newMusic();
   musics: Imusic[] = [];
+  tip: string = '';
   subs: Subscription[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private playerService: PlayerService
+    private spotifyService: SpotifyService
   ) {}
 
   ngOnInit() {
@@ -48,15 +49,38 @@ export class ListMusicComponent {
 
   async getDataPage(tip: string, id: string) {
     if (tip === 'playlist') {
-      await this.getDataPlaylist(id);
-    } else {
-      await this.getDataArtist(id);
+      this.getDataPlaylist(id);
+    } else if (tip === 'artist') {
+      this.getDataArtist(id);
     }
   }
 
   async getDataPlaylist(playlistId: string) {
-    await this.playerService.getPlaylist(playlistId);
+    const playlist = await this.spotifyService.getPlaylistUser(playlistId);
+
+    if (playlist) {
+      this.setPageData(
+        playlist.name,
+        playlist.imageUrl,
+        playlist.musics!,
+        'Playlist'
+      );
+    }
   }
 
-  getDataArtist(artistId: string) {}
+  async getDataArtist(artistId: string) {
+    const artist = await this.spotifyService.getArtistUser(artistId);
+  }
+
+  setPageData(
+    bannerText: string,
+    bannerImageUrl: string,
+    musics: Imusic[],
+    tip: string
+  ) {
+    this.bannerText = bannerText;
+    this.bannerImageUrl = bannerImageUrl;
+    this.musics = musics;
+    this.tip = tip;
+  }
 }

@@ -1,5 +1,5 @@
+import { Imusic } from 'src/app/interfaces/Imusic';
 import { Iartist } from '../interfaces/Iartist';
-import { Imusic } from '../interfaces/Imusic';
 import { Iplaylist } from '../interfaces/Iplaylist';
 
 export function newArtist(): Iartist {
@@ -59,5 +59,6 @@ export function newPlaylist(): Iplaylist {
     id: '',
     name: '',
     imageUrl: '',
+    musics: [],
   };
 }

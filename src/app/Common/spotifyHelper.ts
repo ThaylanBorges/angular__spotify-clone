@@ -48,6 +48,17 @@ export function SpotifyOfArtist(artist: SpotifyApi.ArtistObjectFull): Iartist {
   };
 }
 
+export function SpotifySingleOfArtist(
+  artist: SpotifyApi.SingleArtistResponse
+): Iartist {
+  return {
+    id: artist.id,
+    name: artist.name,
+    imageUrl: artist.images.sort((a, b) => a.width! - b.width!).pop()!.url,
+    musics: [],
+  };
+}
+
 export function SpotifyOfMusics(musics: SpotifyApi.TrackObjectFull): Imusic {
   if (!musics) {
     return newMusic();

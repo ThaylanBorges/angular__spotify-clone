@@ -62,7 +62,6 @@ export class PlayerCardComponent implements OnInit, OnDestroy {
 
   async playPreviousTrack() {
     await this.playerService.playPreviousTrack();
-    console.log(this.currentTrack.id);
   }
 
   async playNextTrack() {

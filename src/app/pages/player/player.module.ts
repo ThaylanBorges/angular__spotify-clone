@@ -19,6 +19,7 @@ import { ListMusicComponent } from '../list-music/list-music.component';
 
 // player Routes
 import { PlayerRotes } from './player.routes';
+import { BannerComponent } from 'src/app/components/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PlayerRotes } from './player.routes';
     SearchComponent,
     SuggestionsSearchComponent,
     ListMusicComponent,
+    BannerComponent,
   ],
   imports: [
     CommonModule,

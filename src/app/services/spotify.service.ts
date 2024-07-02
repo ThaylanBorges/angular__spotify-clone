@@ -12,9 +12,11 @@ import {
   SpotifyOfMusics,
   SpotifyOfPlaylist,
   SpotifyOfUser,
+  SpotifySingleOfArtist,
   SpotifySingleOfPlaylist,
 } from '../Common/spotifyHelper';
 import { Subject } from 'rxjs';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root',
@@ -113,18 +115,28 @@ export class SpotifyService {
     return musicIsPlayng;
   }
 
-  async getPlaylist(playlistId: string, offset = 0, limit = 50) {
+  async getPlaylistUser(playlistId: string, offset = 0, limit = 50) {
     const playlistSpotify = await this.spotifyApi.getPlaylist(playlistId);
 
-    const plalist = SpotifySingleOfPlaylist(playlistSpotify);
+    if (!playlistSpotify) {
+      return null;
+    }
 
-    const musicsSpotify = await this.spotifyApi.getPlaylistTracks(playlistId, {
+    const playlist = SpotifySingleOfPlaylist(playlistSpotify);
+
+    const musicsSpotify = this.spotifyApi.getPlaylistTracks(playlistId, {
       offset,
       limit,
     });
 
-    return plalist;
+    playlist.musics = (await musicsSpotify).items.map((music) =>
+      SpotifyOfMusics(music.track as SpotifyApi.TrackObjectFull)
+    );
+
+    return playlist;
   }
+
+  async getArtistUser(artistId: string) {}
 
   async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {
     const search = await this.spotifyApi.search(
