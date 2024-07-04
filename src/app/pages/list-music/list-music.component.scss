@@ -1,3 +1,31 @@
-.banner {
-  padding: 40px;
+@import "variables";
+@import "table";
+:host  {
+  display: flex;
+  justify-content: space-between;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+
+    &-thumb {
+      background-color: rgb($primary-color, 0.2);
+      border-radius: 10px;
+    }
+
+    &-track {
+      background: transparent;
+    }
+  }
+
+  .list {
+    padding: 0px 50px;
+    padding-bottom: 20px;
+    width: 100%;
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .right-panel {
+    height: 100vh;
+  }
 }

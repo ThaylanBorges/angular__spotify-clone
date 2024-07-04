@@ -1,7 +1,36 @@
-<div class="banner">
+<div class="list">
   <app-banner
+    class="mt-4"
     [imageUrl]="bannerImageUrl"
-    [title]="bannerText"
+    [text]="bannerText"
     [tip]="tip"
   ></app-banner>
+  <table class="table m-3">
+    <thead>
+      <tr>
+        <th class="w-5">#</th>
+        <th class="w-35">Titulo</th>
+        <th class="w-25">Artistas</th>
+        <th class="w-10">Tempo</th>
+        <th class="w-20">Album</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let music of musics"
+        (click)="playMusic(music)"
+        [class.execute]="music.id === currentMusic.id"
+      >
+        <td><fa-icon class="play" [icon]="playIcone"></fa-icon></td>
+        <td>{{ music.title }}</td>
+        <td>{{ getArtist(music) }}</td>
+        <td>{{ music.time }}</td>
+        <td>{{ music.album.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="right-panel">
+  <app-right-panel></app-right-panel>
 </div>

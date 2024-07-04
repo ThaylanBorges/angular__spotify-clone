@@ -5,6 +5,7 @@ import { Imusic } from 'src/app/interfaces/Imusic';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-list-music',
@@ -16,14 +17,15 @@ export class ListMusicComponent {
   bannerText = '';
   playIcone = faPlay;
 
-  currtMusic: Imusic = newMusic();
+  currentMusic: Imusic = newMusic();
   musics: Imusic[] = [];
   tip: string = '';
   subs: Subscription[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private playerService: PlayerService
   ) {}
 
   ngOnInit() {
@@ -59,12 +61,8 @@ export class ListMusicComponent {
     const playlist = await this.spotifyService.getPlaylistUser(playlistId);
 
     if (playlist) {
-      this.setPageData(
-        playlist.name,
-        playlist.imageUrl,
-        playlist.musics!,
-        'Playlist'
-      );
+      this.setPageData(playlist.name, playlist.imageUrl, playlist.musics!);
+      this.tip = 'Playlist';
     }
   }
 
@@ -72,15 +70,27 @@ export class ListMusicComponent {
     const artist = await this.spotifyService.getArtistUser(artistId);
   }
 
-  setPageData(
-    bannerText: string,
-    bannerImageUrl: string,
-    musics: Imusic[],
-    tip: string
-  ) {
+  setPageData(bannerText: string, bannerImageUrl: string, musics: Imusic[]) {
     this.bannerText = bannerText;
     this.bannerImageUrl = bannerImageUrl;
     this.musics = musics;
-    this.tip = tip;
+  }
+
+  getArtist(music: Imusic) {
+    return music.artists.map((artist) => artist.name).join(', ');
+  }
+
+  async getCurrentMusic() {
+    const sub = this.playerService.currentTrack.subscribe((music) => {
+      this.currentMusic = music;
+    });
+
+    this.subs.push(sub);
+  }
+
+  async playMusic(music: Imusic) {
+    await this.spotifyService.playMusic(music.id);
+
+    this.playerService.setCurrentTrack(music);
   }
 }
