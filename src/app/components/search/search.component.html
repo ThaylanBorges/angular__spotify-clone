@@ -8,8 +8,8 @@
     <img class="image-artist" [src]="artist.imageUrl" />
     <div class="legend flex">
       <span>{{ artist.name }}</span>
-      <span>Artista</span>
       <span>{{ artist.id }}</span>
+      <span>Artista</span>
     </div>
   </div>
   <div class="resultSearch-item playlist" *ngFor="let playlist of playlists">
@@ -17,17 +17,17 @@
     <div class="legend flex">
       <span>{{ playlist.name }}</span>
       <span>Playlist</span>
-      <span>{{ playlist.id }}</span>
     </div>
   </div>
   <div
     class="resultSearch-item music"
     *ngFor="let music of musics"
     (click)="playMusic(music)"
+    [class.execute]="music.id === currentMusic.id"
   >
     <img class="image" [src]="music.album.imageUrl" />
     <div class="legend flex">
-      <span>{{ music.title }}asdasdassdfghjkljhgfdssdfghjklkjhgrew</span>
+      <span>{{ music.title }}</span>
       <span>Música</span>
     </div>
   </div>

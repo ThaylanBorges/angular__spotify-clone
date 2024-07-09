@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SpotifyConfig } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -12,11 +13,8 @@ import {
   SpotifyOfMusics,
   SpotifyOfPlaylist,
   SpotifyOfUser,
-  SpotifySingleOfArtist,
   SpotifySingleOfPlaylist,
 } from '../Common/spotifyHelper';
-import { Subject } from 'rxjs';
-import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root',
@@ -136,7 +134,20 @@ export class SpotifyService {
     return playlist;
   }
 
-  async getArtistUser(artistId: string) {}
+  async getArtistUser(artistId: string, offset = 0, limit = 50) {
+    const artistSpotify = await this.spotifyApi.getArtist(artistId);
+
+    const artist = SpotifyOfArtist(artistSpotify);
+
+    const trackSpotify = this.spotifyApi.getArtistTopTracks(artistId, 'BR', {
+      offset,
+      limit,
+    });
+
+    artist.musics = (await trackSpotify).tracks.map(SpotifyOfMusics);
+
+    return artist;
+  }
 
   async search(value: string, limit = 3): Promise<SpotifyApi.SearchResponse> {
     const search = await this.spotifyApi.search(

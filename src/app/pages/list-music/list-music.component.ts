@@ -68,6 +68,11 @@ export class ListMusicComponent {
 
   async getDataArtist(artistId: string) {
     const artist = await this.spotifyService.getArtistUser(artistId);
+
+    if (artist) {
+      this.setPageData(artist.name, artist.imageUrl, artist.musics!);
+      this.tip = 'Artista';
+    }
   }
 
   setPageData(bannerText: string, bannerImageUrl: string, musics: Imusic[]) {

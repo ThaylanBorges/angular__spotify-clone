@@ -6,13 +6,13 @@
   padding: 8px;
   display: flex;
   flex-direction: column;
-  background-color: $transparentBlack-70;
-  border-radius: 10px;
+  background-color: rgb($transparentBlack-80, 0.9);
+  border-radius: 5px;
   color: $background-color2;
 
   .image {
     height: 75%;
-    border-radius: 10px;
+    border-radius: 5px;
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;

@@ -85,3 +85,32 @@ export function SpotifyOfMusics(musics: SpotifyApi.TrackObjectFull): Imusic {
     time: msForM(musics.duration_ms),
   };
 }
+
+export function SpotifySinglesOfMusics(
+  musics: SpotifyApi.SingleTrackResponse
+): Imusic {
+  if (!musics) {
+    return newMusic();
+  }
+
+  const msForM = (ms: number) => {
+    const date = addMilliseconds(new Date(0), ms);
+    return format(date, 'mm:ss');
+  };
+
+  return {
+    id: musics.id,
+    uri: musics.uri,
+    title: musics.name,
+    artists: musics.artists.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+    })),
+    album: {
+      id: musics.id,
+      imageUrl: musics.album.images.shift()!.url,
+      name: musics.album.name,
+    },
+    time: msForM(musics.duration_ms),
+  };
+}

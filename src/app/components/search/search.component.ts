@@ -1,7 +1,13 @@
+import { PlayerService } from 'src/app/services/player.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { newArtist, newMusics, newPlaylist } from 'src/app/Common/factories';
+import {
+  newArtist,
+  newMusic,
+  newMusics,
+  newPlaylist,
+} from 'src/app/Common/factories';
 import {
   SpotifyOfArtist,
   SpotifyOfMusics,
@@ -11,6 +17,7 @@ import { Iartist } from 'src/app/interfaces/Iartist';
 import { Imusic } from 'src/app/interfaces/Imusic';
 import { Iplaylist } from 'src/app/interfaces/Iplaylist';
 import { SpotifyService } from 'src/app/services/spotify.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -21,13 +28,28 @@ export class SearchComponent {
   // crição das propriedades e iniciando elas com factories
   artist: Iartist = newArtist();
   musics: Imusic[] = newMusics();
+  currentMusic: Imusic = newMusic();
+  subs: Subscription[] = [];
   playlists: Iplaylist[] = [];
 
   resultOfSearch: boolean = false;
   researchField = new FormControl(''); // utilizando FormControl para debounce
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(
+    private spotifyService: SpotifyService,
+    private playerService: PlayerService
+  ) {
     this.initializeSearch();
+  }
+
+  ngOnInit() {
+    setInterval(() => {
+      this.getCurretMusic();
+    }, 5000);
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach((sub) => sub.unsubscribe);
   }
 
   // método para inicializar a pesquisa com debounce
@@ -103,6 +125,14 @@ export class SearchComponent {
     const resultSuggestion = $event;
     this.researchField.setValue(resultSuggestion, { emitEvent: false });
     this.search(resultSuggestion);
+  }
+
+  async getCurretMusic() {
+    const sub = this.playerService.currentTrack.subscribe((x) => {
+      this.currentMusic = x;
+    });
+
+    this.subs.push(sub);
   }
 
   // toca a música selecionada
