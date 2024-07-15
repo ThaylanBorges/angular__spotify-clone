@@ -18,6 +18,7 @@ import { Imusic } from 'src/app/interfaces/Imusic';
 import { Iplaylist } from 'src/app/interfaces/Iplaylist';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { Subscription } from 'rxjs';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -37,7 +38,8 @@ export class SearchComponent {
 
   constructor(
     private spotifyService: SpotifyService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router
   ) {
     this.initializeSearch();
   }
@@ -133,6 +135,10 @@ export class SearchComponent {
     });
 
     this.subs.push(sub);
+  }
+
+  click(tip: string, id: string) {
+    this.router.navigate([`player/list/${tip}/${id}`]);
   }
 
   // toca a música selecionada

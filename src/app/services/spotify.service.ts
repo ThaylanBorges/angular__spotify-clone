@@ -1,4 +1,4 @@
-import { map } from 'rxjs';
+import { map, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SpotifyConfig } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ import {
   SpotifyOfUser,
   SpotifySingleOfPlaylist,
 } from '../Common/spotifyHelper';
+import { faPersonWalkingDashedLineArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root',
@@ -122,29 +123,35 @@ export class SpotifyService {
 
     const playlist = SpotifySingleOfPlaylist(playlistSpotify);
 
-    const musicsSpotify = this.spotifyApi.getPlaylistTracks(playlistId, {
+    const musicsSpotify = await this.spotifyApi.getPlaylistTracks(playlistId, {
       offset,
       limit,
     });
 
-    playlist.musics = (await musicsSpotify).items.map((music) =>
+    playlist.musics = musicsSpotify.items.map((music) =>
       SpotifyOfMusics(music.track as SpotifyApi.TrackObjectFull)
     );
 
     return playlist;
   }
 
-  async getArtistUser(artistId: string, offset = 0, limit = 50) {
+  async getArtistUser(artistId: string) {
     const artistSpotify = await this.spotifyApi.getArtist(artistId);
-
     const artist = SpotifyOfArtist(artistSpotify);
 
-    const trackSpotify = this.spotifyApi.getArtistTopTracks(artistId, 'BR', {
-      offset,
-      limit,
+    const searchPlaylist = await this.spotifyApi.searchPlaylists(artist.name);
+
+    const playlistId = searchPlaylist.playlists.items.map((playlist) => {
+      return playlist.id;
     });
 
-    artist.musics = (await trackSpotify).tracks.map(SpotifyOfMusics);
+    const musicsSpotify = await this.spotifyApi.getPlaylistTracks(
+      playlistId[0]
+    );
+
+    artist.musics = musicsSpotify.items.map((music) =>
+      SpotifyOfMusics(music.track as SpotifyApi.TrackObjectFull)
+    );
 
     return artist;
   }

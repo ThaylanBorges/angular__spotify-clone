@@ -6,6 +6,7 @@ import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-artist',
@@ -24,7 +25,7 @@ export class TopArtistComponent {
   faArrowLeft = faArrowAltCircleLeft;
   faArrowRight = faArrowAltCircleRight;
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private spotifyService: SpotifyService, private router: Router) {}
 
   ngOnInit() {
     this.getMyFiveArtists();
@@ -68,5 +69,9 @@ export class TopArtistComponent {
     } else {
       this.selectedIndex++;
     }
+  }
+
+  click(tip: string, id: string) {
+    this.router.navigate([`player/list/${tip}/${id}`]);
   }
 }

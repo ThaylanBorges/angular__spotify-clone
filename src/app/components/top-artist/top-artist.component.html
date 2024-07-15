@@ -3,6 +3,7 @@
     <div
       class="image-container fade"
       [ngClass]="{ 'image-active': selectedIndex === i }"
+      (click)="click('artist', artist.id)"
     >
       <span class="artist flex">
         {{ artist.name }}

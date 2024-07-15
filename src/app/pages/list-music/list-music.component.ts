@@ -30,6 +30,7 @@ export class ListMusicComponent {
 
   ngOnInit() {
     this.getMusics();
+    this.getCurrentMusic();
   }
 
   ngOnDestroy() {

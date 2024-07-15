@@ -4,19 +4,23 @@
   placeholder="Artistas, Músicas, Playlists"
 />
 <div class="resultSearch flex" *ngIf="resultOfSearch; else notFound">
-  <div class="resultSearch-item artist">
+  <div class="resultSearch-item artist" (click)="click('artist', artist.id)">
     <img class="image-artist" [src]="artist.imageUrl" />
     <div class="legend flex">
       <span>{{ artist.name }}</span>
-      <span>{{ artist.id }}</span>
       <span>Artista</span>
     </div>
   </div>
   <div class="resultSearch-item playlist" *ngFor="let playlist of playlists">
-    <img class="image" [src]="playlist.imageUrl" />
-    <div class="legend flex">
-      <span>{{ playlist.name }}</span>
-      <span>Playlist</span>
+    <div
+      class="resultSearch-item playlist"
+      (click)="click('playlist', playlist.id)"
+    >
+      <img class="image" [src]="playlist.imageUrl" />
+      <div class="legend flex">
+        <span>{{ playlist.name }}</span>
+        <span>Playlist</span>
+      </div>
     </div>
   </div>
   <div

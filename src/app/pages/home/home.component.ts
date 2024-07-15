@@ -20,8 +20,6 @@ export class HomeComponent {
 
   musics: Imusic[] = [];
 
-  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
-
   music = '';
 
   currentMusic: Imusic = newMusic();
